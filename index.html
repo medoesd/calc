@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Scientific Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+        }
+        #root {
+            width: 100%;
+            max-width: 420px;
+        }
+        .calculator-wrapper {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .display {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+            text-align: right;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #343a40;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-bottom: 2rem;
+            border: 1px solid #dee2e6;
+        }
+        .btn {
+            height: 65px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: none;
+        }
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-light {
+            background-color: #f8f9fa;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-success {
+            background-color: #198754;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <!-- React and Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const App = () => {
+            const [display, setDisplay] = useState('0');
+            const [expression, setExpression] = useState('');
+
+            // Handles number and decimal clicks
+            const handleNumberClick = (value) => {
+                if (display === '0' && value !== '.') {
+                    setDisplay(value);
+                    setExpression(value);
+                } else if (display.includes('.') && value === '.') {
+                    return; // Avoid multiple decimals
+                } else {
+                    setDisplay(prev => prev + value);
+                    setExpression(prev => prev + value);
+                }
+            };
+
+            // Handles operator clicks
+            const handleOperatorClick = (op) => {
+                const lastChar = expression.slice(-1);
+                // Prevent adding operator if the expression is empty or ends with an operator
+                if (expression === '' || ['+', '-', '*', '/'].includes(lastChar)) {
+                    return;
+                }
+                setDisplay(op);
+                setExpression(prev => prev + op);
+            };
+
+            // Handles scientific function clicks
+            const handleFunctionClick = (func) => {
+                try {
+                    let currentVal = parseFloat(display);
+                    if (isNaN(currentVal)) return;
+
+                    let result;
+                    switch(func) {
+                        case 'sin': result = Math.sin(currentVal * Math.PI / 180); break;
+                        case 'cos': result = Math.cos(currentVal * Math.PI / 180); break;
+                        case 'tan': result = Math.tan(currentVal * Math.PI / 180); break;
+                        case 'log': result = Math.log10(currentVal); break;
+                        case 'ln': result = Math.log(currentVal); break;
+                        case 'sqrt': result = Math.sqrt(currentVal); break;
+                        case 'x²': result = Math.pow(currentVal, 2); break;
+                        case 'x³': result = Math.pow(currentVal, 3); break;
+                        case 'π': result = Math.PI; break;
+                        default: return;
+                    }
+
+                    const roundedResult = parseFloat(result.toPrecision(12));
+                    setDisplay(String(roundedResult));
+                    setExpression(String(roundedResult));
+                } catch (error) {
+                    setDisplay('Error');
+                    setExpression('');
+                }
+            };
+
+            // Calculates the final result
+            const handleEquals = () => {
+                try {
+                    // Using Function constructor for safer evaluation than eval()
+                    const calculate = new Function('return ' + expression);
+                    const result = calculate();
+                     if (isNaN(result) || !isFinite(result)) {
+                        setDisplay('Error');
+                        setExpression('');
+                        return;
+                    }
+                    const roundedResult = parseFloat(result.toPrecision(12));
+                    setDisplay(String(roundedResult));
+                    setExpression(String(roundedResult));
+                } catch (error) {
+                    setDisplay('Error');
+                    setExpression('');
+                }
+            };
+
+            // Clears the display and expression
+            const handleClear = () => {
+                setDisplay('0');
+                setExpression('');
+            };
+
+            // Deletes the last character
+            const handleBackspace = () => {
+                if (display.length > 1) {
+                    setDisplay(prev => prev.slice(0, -1));
+                    setExpression(prev => prev.slice(0, -1));
+                } else {
+                    setDisplay('0');
+                    setExpression('');
+                }
+            };
+
+            const buttons = [
+                { val: 'sin', class: 'btn-primary', handler: () => handleFunctionClick('sin') },
+                { val: 'cos', class: 'btn-primary', handler: () => handleFunctionClick('cos') },
+                { val: 'tan', class: 'btn-primary', handler: () => handleFunctionClick('tan') },
+                { val: 'log', class: 'btn-primary', handler: () => handleFunctionClick('log') },
+
+                { val: 'C', class: 'btn-danger', handler: handleClear },
+                { val: '⌫', class: 'btn-warning', handler: handleBackspace },
+                { val: '%', class: 'btn-warning', handler: () => handleOperatorClick('%') },
+                { val: '/', class: 'btn-warning', handler: () => handleOperatorClick('/') },
+
+                { val: '7', class: 'btn-light', handler: () => handleNumberClick('7') },
+                { val: '8', class: 'btn-light', handler: () => handleNumberClick('8') },
+                { val: '9', class: 'btn-light', handler: () => handleNumberClick('9') },
+                { val: '*', class: 'btn-warning', handler: () => handleOperatorClick('*') },
+
+                { val: '4', class: 'btn-light', handler: () => handleNumberClick('4') },
+                { val: '5', class: 'btn-light', handler: () => handleNumberClick('5') },
+                { val: '6', class: 'btn-light', handler: () => handleNumberClick('6') },
+                { val: '-', class: 'btn-warning', handler: () => handleOperatorClick('-') },
+
+                { val: '1', class: 'btn-light', handler: () => handleNumberClick('1') },
+                { val: '2', class: 'btn-light', handler: () => handleNumberClick('2') },
+                { val: '3', class: 'btn-light', handler: () => handleNumberClick('3') },
+                { val: '+', class: 'btn-warning', handler: () => handleOperatorClick('+') },
+
+                { val: 'ln', class: 'btn-primary', handler: () => handleFunctionClick('ln') },
+                { val: '0', class: 'btn-light', handler: () => handleNumberClick('0') },
+                { val: '.', class: 'btn-light', handler: () => handleNumberClick('.') },
+                { val: '=', class: 'btn-success', handler: handleEquals },
+
+                { val: 'sqrt', class: 'btn-primary', handler: () => handleFunctionClick('sqrt') },
+                { val: 'x²', class: 'btn-primary', handler: () => handleFunctionClick('x²') },
+                { val: 'x³', class: 'btn-primary', handler: () => handleFunctionClick('x³') },
+                { val: 'π', class: 'btn-primary', handler: () => handleFunctionClick('π') },
+
+            ];
+
+            return (
+                <div className="calculator-wrapper">
+                    <div className="display">{display}</div>
+                    <div className="row g-2">
+                         {buttons.map((btn, index) => (
+                            <div className="col-3" key={index}>
+                                <button
+                                    onClick={btn.handler}
+                                    className={`btn w-100 ${btn.class}`}>
+                                    {btn.val}
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
