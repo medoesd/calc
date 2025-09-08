@@ -529,6 +529,36 @@
             font-size: 0.9rem;
         }
 
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+            z-index: 999;
+            border: 1px solid var(--accent-color);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-color);
+        }
+
         @media (max-width: 992px) {
             .nav-container {
                 position: relative;
@@ -602,246 +632,276 @@
             }
         }
 
-        /* Dark Mode Styles */
-        body.dark-mode {  
-            background-color: #121212 !important;  
-            color: #e0e0e0 !important;  
-        }  
-        body.dark-mode header {  
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a 70%) !important;  
-            color: #f1f1f1 !important;  
-        }  
-        body.dark-mode nav {  
-            background-color: #1f1f1f !important;  
-        }  
-        body.dark-mode .nav-links a {  
-            color: #ddd !important;  
-        }  
-        body.dark-mode .nav-links a:hover,  
-        body.dark-mode .nav-links a.active-link {  
-            color: #90caf9 !important;  
-        }  
-        body.dark-mode section {  
-            background-color: #181818 !important;  
-        }  
-        body.dark-mode .service-card,  
-        body.dark-mode .product-card,  
-        body.dark-mode .bot-card,  
-        body.dark-mode .contact-card,  
-        body.dark-mode .logo-item {  
-            background-color: #1f1f1f !important;  
-            color: #f1f1f1 !important;  
-            border: 1px solid #333 !important;  
-        }  
-        body.dark-mode h1,  
-        body.dark-mode h2,  
-        body.dark-mode h3 {  
-            color: #f1f1f1 !important;  
-        }  
-        body.dark-mode p,  
-        body.dark-mode li {  
-            color: #ccc !important;  
-        }  
-        body.dark-mode a {  
-            color: #90caf9 !important;  
-        }  
-        body.dark-mode footer {  
-            background-color: #0d0d0d !important;  
-            color: #aaa !important;  
-        }  
+        /* --- FAB STYLES START --- */
 
-        /* Google Translate Icon Styles */
-        .translate-icon {  
-            position: relative;  
-            width: 100%;
-            height: 100%;
-            display: flex;  
-            align-items: center;  
-            justify-content: center;  
-            cursor: pointer;  
-            z-index: 2;
-        }  
-        .translate-icon::before {  
-            content: "🌐";  
-            font-size: 24px;
-            z-index: 1;  
-            pointer-events: none;  
-        }  
-        .goog-te-gadget {  
-            font-size: 0 !important;  
-            color: transparent !important;  
-        }  
-        .goog-te-gadget span,  
-        .goog-te-gadget-simple,  
-        .goog-te-banner-frame,  
-        .goog-logo-link {  
-            display: none !important;  
-        }  
-        .translate-icon select {  
-            position: absolute;  
-            top: 0;  
-            left: 0;  
-            width: 100%;  
-            height: 100%;  
-            opacity: 0;  
-            cursor: pointer;  
-            z-index: 2;  
-        }
-
-        /* Back to Top Button */
-        #backToTop {  
-            position: fixed;  
-            bottom: 3px;
-            left: 50%;  
-            transform: translateX(-50%);  
-            z-index: 9999;
-            cursor: pointer;  
-            display: none;
-        }  
-        #backToTop svg {  
-            filter: drop-shadow(0 0 10px rgba(0, 123, 255, 0.7));  
-            transition: all 0.4s ease-in-out;  
-            animation: pulse 2s infinite;
-        }  
-        #backToTop:hover svg {  
-            fill: #ff6600;  
-            filter: drop-shadow(0 0 20px rgba(255, 102, 0, 0.9));  
-            transform: scale(1.2) translateY(-10px);
-        }  
-        @keyframes pulse {  
-            0%   { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
-            50%  { filter: drop-shadow(0 0 20px rgba(0, 123, 255, 1)); }  
-            100% { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
-        }  
-
-        /* =================================== */
-        /* FAB Styles (NEW)             */
-        /* =================================== */
+        /* Main Container for the FAB */
         .fab-container {
             position: fixed;
-            bottom: 25px;
-            left: 25px;
+            bottom: 20px;
+            left: 20px;
             z-index: 10000;
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column-reverse; /* Places main button below the options */
             align-items: center;
         }
 
-        .main-fab {
-            background-color: var(--secondary-color);
-            color: white;
+        /* Main Toggle Button */
+        .fab-main-button {
             width: 60px;
             height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
             border-radius: 50%;
-            border: none;
-            font-size: 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+            border: 2px solid var(--accent-color);
         }
 
-        .main-fab:hover {
-            background-color: var(--primary-color);
-            transform: scale(1.1);
+        .fab-main-button:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
-        .fab-actions {
+        /* Rotates the icon when the menu is open */
+        .fab-container.open .fab-main-button {
+            transform: rotate(225deg);
+        }
+
+        /* Container for the option buttons */
+        .fab-options {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 15px;
-            list-style: none;
-            padding: 0;
-            visibility: hidden;
-            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
             transform: translateY(20px) scale(0.9);
-            transition: visibility 0.2s, opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .fab-container.active .fab-actions {
-            visibility: visible;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .fab-container.active .main-fab i {
-            transform: rotate(90deg);
-        }
-        .main-fab i {
-            transition: transform 0.3s ease;
-        }
-
-        .fab-action-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .fab-action-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            color: white;
-            font-size: 22px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            overflow: hidden;
-        }
-
-        .fab-label {
-            position: absolute;
-            left: 65px; /* Position to the right of the button */
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            white-space: nowrap;
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-            pointer-events: none;
+            visibility: hidden; /* Hide when closed */
         }
 
-        .fab-action-item:hover .fab-label {
+        /* Show the options when the menu is open */
+        .fab-container.open .fab-options {
+            transform: translateY(0) scale(1);
             opacity: 1;
             visibility: visible;
         }
 
-        /* Specific styles for each button */
-        #darkModeToggle { background-color: #333; }
-        #chatBtn-fab { background-color: #0075E3; }
-        #google_translate_element_fab { background-color: #f1f1f1; }
-        
-        /* Jotform feedback button container */
-        #feedback-container .jotform-feedback-link {
+        /* Wrapper for each individual option button */
+        .fab-option {
+            margin-bottom: 15px;
+        }
+
+        /* HIDE ORIGINAL BUTTONS from their original fixed positions */
+        /* This targets only the top-level buttons to avoid hiding them once they are moved into the FAB */
+        body > #darkModeToggle,
+        body > #google_translate_element,
+        body > #chatBtn,
+        body > .jotform-feedback-link {
+            display: none !important;
+        }
+
+        /* --- RESET STYLES FOR MOVED BUTTONS --- */
+        /* This is the most important part: It overrides their original fixed positioning and styles */
+        .fab-option > * {
             position: static !important;
-            top: auto !important;
-            right: auto !important;
-            width: 50px !important;
-            height: 50px !important;
+            transform: none !important;
+            width: 48px !important;
+            height: 48px !important;
             border-radius: 50% !important;
-            background: #F59202 !important;
-            color: white !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            font-size: 12px !important;
-            padding: 0 !important;
-            box-shadow: none !important;
+            margin: 0 !important;
+            font-size: 22px !important;
+            background-color: white !important;
+            color: var(--dark-color) !important;
+            cursor: pointer;
         }
+
+        /* Specific Resets for each button */
+        .fab-option #darkModeToggle {
+            background: #fff !important;
+            color: #333 !important;
+        }
+
+        .fab-option #google_translate_element {
+            background: white !important;
+            border: none !important;
+            overflow: hidden; /* Hides the dropdown arrow from poking out */
+        }
+
+        .fab-option #google_translate_element .translate-icon::before {
+            font-size: 24px !important; /* Make the globe icon fit */
+        }
+
+        .fab-option #google_translate_element .goog-te-gadget {
+            font-size: 0 !important; /* Hide the text like "Powered by" */
+        }
+
+        .fab-option #chatBtn {
+            background-color: #0075E3 !important;
+        }
+
+        .fab-option #chatBtn svg {
+            width: 24px !important;
+            height: 24px !important;
+            fill: #fff !important;
+        }
+
+        .fab-option .jotform-feedback-link {
+            background: #F59202 !important;
+            color: white !important;
+            text-indent: -9999px; /* Hide the "Feedback" text */
+            /* Use an SVG icon instead of text */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>') !important;
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
+            background-size: 24px 24px !important;
+        }
+
+        /* --- FAB STYLES END --- */
+
     </style>
 </head>
 <body>
+    
+    <div id="google_translate_element" class="translate-icon"></div>
+    <script>
+        // 📌 اجعل الترجمة تبدأ دائمًا بالعربية  
+        if (!document.cookie.includes("googtrans=/ar/ar")) {
+            document.cookie = "googtrans=/ar/ar;path=/;";
+        }
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'ar',
+                autoDisplay: true
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* زر الترجمة */
+        .translate-icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+        }
+        /* الأيقونة 🌐 */
+        .translate-icon::before {
+            content: "🌐";
+            font-size: 49px; /* نفس مقاسك */
+            z-index: 1;
+            pointer-events: none;
+        }
+        /* إخفاء النصوص الجانبية */
+        .goog-te-gadget {
+            font-size: 0 !important;
+            color: transparent !important;
+        }
+        .goog-te-gadget span,
+        .goog-te-gadget-simple,
+        .goog-te-banner-frame,
+        .goog-logo-link {
+            display: none !important;
+        }
+        /* القائمة المنسدلة شفافة فوق الأيقونة */
+        .translate-icon select {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+    </style>
+    
+    <button id="darkModeToggle" style="background:#333;color:#fff;border:none;border-radius:50%;width:55px;height:55px;font-size:50px;cursor:pointer;z-index:99999;">🌗</button>
+    <style>
+        /* الوضع الداكن */
+        body.dark-mode {
+            background-color: #121212 !important;
+            color: #e0e0e0 !important;
+        }
+        body.dark-mode header {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a 70%) !important;
+            color: #f1f1f1 !important;
+        }
+        body.dark-mode nav {
+            background-color: #1f1f1f !important;
+        }
+        body.dark-mode .nav-links a {
+            color: #ddd !important;
+        }
+        body.dark-mode .nav-links a:hover,
+        body.dark-mode .nav-links a.active-link {
+            color: #90caf9 !important;
+        }
+        body.dark-mode section {
+            background-color: #181818 !important;
+        }
+        body.dark-mode .service-card,
+        body.dark-mode .product-card,
+        body.dark-mode .bot-card,
+        body.dark-mode .contact-card,
+        body.dark-mode .logo-item {
+            background-color: #1f1f1f !important;
+            color: #f1f1f1 !important;
+            border: 1px solid #333 !important;
+        }
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3 {
+            color: #f1f1f1 !important;
+        }
+        body.dark-mode p,
+        body.dark-mode li {
+            color: #ccc !important;
+        }
+        body.dark-mode a {
+            color: #90caf9 !important;
+        }
+        body.dark-mode footer {
+            background-color: #0d0d0d !important;
+            color: #aaa !important;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleBtn = document.getElementById("darkModeToggle");
+            const body = document.body;
+            // استعادة الوضع المحفوظ  
+            if (localStorage.getItem("theme") === "light") {
+                body.classList.add("light-mode");
+            }
+            // تبديل الوضع  
+            toggleBtn.addEventListener("click", () => {
+                body.classList.toggle("dark-mode");
+                if (body.classList.contains("dark-mode")) {
+                    localStorage.setItem("theme", "dark");
+                } else {
+                    localStorage.setItem("theme", "light");
+                }
+            });
+        });
+    </script>
+
+    <a id="chatBtn" style="display: flex;align-items: center;justify-content: center;width: 60px;height: 60px;background-color: #0075E3;border-radius: 50%;border: none;cursor: pointer;z-index: 9999;box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#fff" viewBox="0 0 24 24">
+            <path d="M20 2H4C2.897 2 2 2.897 2 4v14c0 1.103.897 2 2 2h14l4 4V4c0-1.103-.897-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />
+        </svg>
+    </a>
 
     <header>
         <div class="container">
@@ -849,273 +909,958 @@
             <h1>CIW</h1>
             <p class="tagline">الشركة الرائدة والمبتكرة الصاعدة في التكنولوجيا</p>
         </div>
-    </header>
-
-    <section id="about">
-      <div class="container">
-        <div class="section-title">
-          <h2>من نحن</h2>
-        </div>
-        <div class="about-content">
-          <div class="about-text">
-            <p>تُعَد شركة CIW كيانًا عالميًا رائدًا يتميز برؤيته الاستراتيجية الطموحة ونهجه المبتكر في تقديم الحلول الشاملة. تسعى الشركة إلى إحداث تأثير عميق في المشهد العالمي من خلال تقديم خدمات ومنتجات متكاملة تغطي مختلف المجالات، مع التزام راسخ بالجودة، والكفاءة، والتطور المستمر.</p>
-            <p>تؤمن CIW بأن الابتكار هو المحرك الأساسي للنمو، ولذلك تضع الإبداع والتطوير في صميم كل ما تقدمه. تلتزم الشركة بتقديم قيمة حقيقية لعملائها حول العالم، عبر الاعتماد على خبراتها المتنوعة وشبكة مواردها العالمية، بما يعكس مكانتها كشريك موثوق ووجهة مفضلة للتميز.</p>
-          </div>
-          <div class="about-image">
-            <img src="https://www2.0zz0.com/2025/09/04/18/685330149.png" alt="أحمد عصام يتأمل المستقبل">
-          </div>
-        </div>
+         
+   </header>
+<section id="about">
+  <div class="container">
+    <div class="section-title">
+      <h2>من نحن</h2>
+    </div>
+    <div class="about-content">
+      <div class="about-text">
+        <p>تُعَد شركة CIW كيانًا عالميًا رائدًا يتميز برؤيته الاستراتيجية الطموحة ونهجه المبتكر في تقديم الحلول الشاملة. تسعى الشركة إلى إحداث تأثير عميق في المشهد العالمي من خلال تقديم خدمات ومنتجات متكاملة تغطي مختلف المجالات، مع التزام راسخ بالجودة، والكفاءة، والتطور المستمر.</p>
+        <p>تؤمن CIW بأن الابتكار هو المحرك الأساسي للنمو، ولذلك تضع الإبداع والتطوير في صميم كل ما تقدمه. تلتزم الشركة بتقديم قيمة حقيقية لعملائها حول العالم، عبر الاعتماد على خبراتها المتنوعة وشبكة مواردها العالمية، بما يعكس مكانتها كشريك موثوق ووجهة مفضلة للتميز.</p>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section id="logos">
-        <div class="container">
-            <div class="section-title">
+<style>
+  /* توحيد حجم الخط */
+  #about h2, #about p {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.8;
+  }
+</style>
+                </div>
+                <div class="about-image">
+                    <img src="https://www2.0zz0.com/2025/09/04/18/685330149.png" alt="أحمد عصام يتأمل المستقبل">
+                </div>
             </div>
         </div>
     </section>
-
+    <section id="logos">
+        <div class="container">
+            <div class="section-title">
+             
+             
+    </section>
     <section id="services">
         <div class="container">
             <div class="section-title">
                 <h2>خدماتنا</h2>
             </div>
             <div class="services-grid">
-                <div class="service-card"><div class="icon"><i class="fas fa-hammer"></i></div><h3>هكر</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-code"></i></div><h3>برمجة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-network-wired"></i></div><h3>هندسة شبكات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-chart-line"></i></div><h3>تحليل بيانات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-laptop-code"></i></div><h3>تكنولوجيا مالية</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-money-check-alt"></i></div><h3>خدمات بنكية</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-credit-card"></i></div><h3>دفع إلكتروني</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-phone-volume"></i></div><h3>اتصالات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-plug"></i></div><h3>إلكترونيات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-briefcase"></i></div><h3>إدارة أعمال</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-retweet"></i></div><h3>تحول رقمي</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-headset"></i></div><h3>خدمة عملاء</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-robot"></i></div><h3>ذكاء اصطناعي</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-server"></i></div><h3>تكنولوجيا المعلومات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-seedling"></i></div><h3>زراعة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-palette"></i></div><h3>تصميم الجرافيك</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-paint-brush"></i></div><h3>فوتوشوب</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-industry"></i></div><h3>صناعة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-store-alt"></i></div><h3>تجارة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-globe-americas"></i></div><h3>سياحة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-concierge-bell"></i></div><h3>خدمات عامة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-landmark"></i></div><h3>خدمات حكومية</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-credit-card"></i></div><h3>خدمات الفيزا والماكينة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-tty"></i></div><h3>خدمات الاتصالات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-brain"></i></div><h3>خدمات AI</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-gavel"></i></div><h3>خدمات النيابة</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-link"></i></div><h3>خدمات الخطوط</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-money-bill-alt"></i></div><h3>خدمات الكاش</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-handshake"></i></div><h3>خدمات مالية وغير مالية</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-user-circle"></i></div><h3>خدمات لك أنت</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-gem"></i></div><h3>خدمات CONNICT</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-plus"></i></div><h3>خدمات إضافية</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-star-of-life"></i></div><h3>خدمات Plus</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-user-cog"></i></div><h3>خدمات العميل</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-crown"></i></div><h3>خدمات Premium</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-share-alt"></i></div><h3>خدمات السوشيال ميديا</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-graduation-cap"></i></div><h3>خدمات تعليمية</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-running"></i></div><h3>الأنشطة والخدمات</h3></div>
-                <div class="service-card"><div class="icon"><i class="fas fa-ellipsis-h"></i></div><h3>أكثر بكثير</h3></div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-hammer"></i></div>
+                    <h3>هكر</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-code"></i></div>
+                    <h3>برمجة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>هندسة شبكات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>تحليل بيانات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>تكنولوجيا مالية</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-money-check-alt"></i></div>
+                    <h3>خدمات بنكية</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-credit-card"></i></div>
+                    <h3>دفع إلكتروني</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-phone-volume"></i></div>
+                    <h3>اتصالات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-plug"></i></div>
+                    <h3>إلكترونيات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>إدارة أعمال</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-retweet"></i></div>
+                    <h3>تحول رقمي</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-headset"></i></div>
+                    <h3>خدمة عملاء</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <h3>ذكاء اصطناعي</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-server"></i></div>
+                    <h3>تكنولوجيا المعلومات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-seedling"></i></div>
+                    <h3>زراعة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-palette"></i></div>
+                    <h3>تصميم الجرافيك</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>فوتوشوب</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-industry"></i></div>
+                    <h3>صناعة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-store-alt"></i></div>
+                    <h3>تجارة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-globe-americas"></i></div>
+                    <h3>سياحة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-concierge-bell"></i></div>
+                    <h3>خدمات عامة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-landmark"></i></div>
+                    <h3>خدمات حكومية</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-credit-card"></i></div>
+                    <h3>خدمات الفيزا والماكينة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-tty"></i></div>
+                    <h3>خدمات الاتصالات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-brain"></i></div>
+                    <h3>خدمات AI</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-gavel"></i></div>
+                    <h3>خدمات النيابة</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-link"></i></div>
+                    <h3>خدمات الخطوط</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-money-bill-alt"></i></div>
+                    <h3>خدمات الكاش</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-handshake"></i></div>
+                    <h3>خدمات مالية وغير مالية</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-user-circle"></i></div>
+                    <h3>خدمات لك أنت</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-gem"></i></div>
+                    <h3>خدمات CONNICT</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-plus"></i></div>
+                    <h3>خدمات إضافية</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-star-of-life"></i></div>
+                    <h3>خدمات Plus</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-user-cog"></i></div>
+                    <h3>خدمات العميل</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-crown"></i></div>
+                    <h3>خدمات Premium</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-share-alt"></i></div>
+                    <h3>خدمات السوشيال ميديا</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>خدمات تعليمية</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-running"></i></div>
+                    <h3>الأنشطة والخدمات</h3>
+                </div>
+                <div class="service-card">
+                    <div class="icon"><i class="fas fa-ellipsis-h"></i></div>
+                    <h3>أكثر بكثير</h3>
+                </div>
             </div>
         </div>
     </section>
-
     <section id="products">
         <div class="container">
             <div class="section-title">
                 <h2>منتجاتنا</h2>
             </div>
             <div class="products-grid">
-                <div class="product-card"><div class="icon"><i class="fas fa-print"></i></div><h3>التغليف والطباعة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-gifts"></i></div><h3>الهدايا والمصروفات اليدوية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-laptop-code"></i></div><h3>الإلكترونيات الاستهلاكية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-car"></i></div><h3>المركبات والنقل</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-flask"></i></div><h3>المواد الكيميائية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-hard-hat"></i></div><h3>البناء وآلات البناء</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-tools"></i></div><h3>الأدوات والمعدات</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-microchip"></i></div><h3>المكونات الإلكترونية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-dumbbell"></i></div><h3>الرياضة والترفيه</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-cog"></i></div><h3>قطع غيار المركبات وإكسسواراتها</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-utensils"></i></div><h3>معدات الخدمات التجارية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-home"></i></div><h3>المنزل والحديقة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-tv"></i></div><h3>الأجهزة المنزلية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-tshirt"></i></div><h3>الأقمشة والمواد الخاصة النسيجية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-pizza-slice"></i></div><h3>أطعمة ومشروبات</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-notes-medical"></i></div><h3>أجهزة ومستلزمات طبية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-spray-can"></i></div><h3>الجمال</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-cogs"></i></div><h3>الآلات الصناعية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-baby"></i></div><h3>الأم، الأطفال واللعب</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-gem"></i></div><h3>الساعات والمجوهرات والذهب</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-couch"></i></div><h3>الأثاث</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-shopping-bag"></i></div><h3>الأمتعة والحقائب والشنط</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-city"></i></div><h3>الإنشاءات والعقارات</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-pump-soap"></i></div><h3>الرعاية الشخصية والتنظيف المنزلي</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-car-side"></i></div><h3>إكسسوارات السيارات</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-lightbulb"></i></div><h3>المصابيح والإضاءة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-heartbeat"></i></div><h3>الرعاية الصحية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-solar-panel"></i></div><h3>الطاقة المتجددة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-box"></i></div><h3>المعدات والمستلزمات</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-pencil-alt"></i></div><h3>المستلزمات المكتبية والمدرسية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-dog"></i></div><h3>مستلزمات الحيوانات الأليفة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-user-shield"></i></div><h3>الأمن</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-vials"></i></div><h3>معدات وأدوات الاختبار</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-shield-alt"></i></div><h3>السلامة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-stream"></i></div><h3>المعادن والسبائك</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-cubes"></i></div><h3>المطاط والبلاستيك</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-dolly-flatbed"></i></div><h3>مناولة المواد</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-bolt"></i></div><h3>نقل الطاقة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-handshake"></i></div><h3>خدمات الأعمال</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-tools"></i></div><h3>خدمات التصنيع</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-tractor"></i></div><h3>الزراعة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-tree"></i></div><h3>البيئة</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-hammer"></i></div><h3>الحديد والأخشاب</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-cable-car"></i></div><h3>خطوط</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-wifi"></i></div><h3>رواتر</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-credit-card"></i></div><h3>فيزات</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-mobile-alt"></i></div><h3>أجهزة إلكترونية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-phone-square-alt"></i></div><h3>تليفون أرضي</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-file-alt"></i></div><h3>المطبوعات الورقية</h3></div>
-                <div class="product-card"><div class="icon"><i class="fas fa-ellipsis-h"></i></div><h3>أكثر بكثير</h3></div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-print"></i></div>
+                    <h3>التغليف والطباعة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-gifts"></i></div>
+                    <h3>الهدايا والمصروفات اليدوية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>الإلكترونيات الاستهلاكية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-car"></i></div>
+                    <h3>المركبات والنقل</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-flask"></i></div>
+                    <h3>المواد الكيميائية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-hard-hat"></i></div>
+                    <h3>البناء وآلات البناء</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-tools"></i></div>
+                    <h3>الأدوات والمعدات</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-microchip"></i></div>
+                    <h3>المكونات الإلكترونية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3>الرياضة والترفيه</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-cog"></i></div>
+                    <h3>قطع غيار المركبات وإكسسواراتها</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-utensils"></i></div>
+                    <h3>معدات الخدمات التجارية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-home"></i></div>
+                    <h3>المنزل والحديقة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-tv"></i></div>
+                    <h3>الأجهزة المنزلية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-tshirt"></i></div>
+                    <h3>الأقمشة والمواد الخاصة النسيجية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-pizza-slice"></i></div>
+                    <h3>أطعمة ومشروبات</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-notes-medical"></i></div>
+                    <h3>أجهزة ومستلزمات طبية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-spray-can"></i></div>
+                    <h3>الجمال</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-cogs"></i></div>
+                    <h3>الآلات الصناعية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-baby"></i></div>
+                    <h3>الأم، الأطفال واللعب</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-gem"></i></div>
+                    <h3>الساعات والمجوهرات والذهب</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-couch"></i></div>
+                    <h3>الأثاث</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3>الأمتعة والحقائب والشنط</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-city"></i></div>
+                    <h3>الإنشاءات والعقارات</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-pump-soap"></i></div>
+                    <h3>الرعاية الشخصية والتنظيف المنزلي</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-car-side"></i></div>
+                    <h3>إكسسوارات السيارات</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>المصابيح والإضاءة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>الرعاية الصحية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-solar-panel"></i></div>
+                    <h3>الطاقة المتجددة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-box"></i></div>
+                    <h3>المعدات والمستلزمات</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-pencil-alt"></i></div>
+                    <h3>المستلزمات المكتبية والمدرسية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-dog"></i></div>
+                    <h3>مستلزمات الحيوانات الأليفة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>الأمن</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-vials"></i></div>
+                    <h3>معدات وأدوات الاختبار</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>السلامة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-stream"></i></div>
+                    <h3>المعادن والسبائك</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-cubes"></i></div>
+                    <h3>المطاط والبلاستيك</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-dolly-flatbed"></i></div>
+                    <h3>مناولة المواد</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-bolt"></i></div>
+                    <h3>نقل الطاقة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-handshake"></i></div>
+                    <h3>خدمات الأعمال</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-tools"></i></div>
+                    <h3>خدمات التصنيع</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-tractor"></i></div>
+                    <h3>الزراعة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-tree"></i></div>
+                    <h3>البيئة</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-hammer"></i></div>
+                    <h3>الحديد والأخشاب</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-cable-car"></i></div>
+                    <h3>خطوط</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-wifi"></i></div>
+                    <h3>رواتر</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-credit-card"></i></div>
+                    <h3>فيزات</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>أجهزة إلكترونية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-phone-square-alt"></i></div>
+                    <h3>تليفون أرضي</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>المطبوعات الورقية</h3>
+                </div>
+                <div class="product-card">
+                    <div class="icon"><i class="fas fa-ellipsis-h"></i></div>
+                    <h3>أكثر بكثير</h3>
+                </div>
             </div>
         </div>
     </section>
-
     <section id="bots">
         <div class="container">
             <div class="section-title">
                 <h2>بوتاتنا وتطبيقاتنا</h2>
             </div>
             <div class="bots-container">
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوتات ahmedesam</h3><a href="https://t.me/ahmedesam_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت ترجمة</h3><a href="https://t.me/ahmedesam1_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت التحدث مع الذكاء الاصطناعي</h3><a href="https://t.me/ahmedesam2_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تحميل من سوشيال ميديا</h3><a href="https://t.me/ahmedesam3_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تحويل الكلمات إلى صور</h3><a href="https://t.me/ahmedesam4_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تواصل</h3><a href="https://t.me/ahmedesam5_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت صنع لوجو</h3><a href="https://t.me/ahmedesam6_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت ايميل مؤقت</h3><a href="https://t.me/ahmedesam7_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت اعلانات</h3><a href="https://t.me/ahmedesam8_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت الجني الأزرق</h3><a href="https://t.me/ahmedesam9_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت صانع بوتات</h3><a href="https://t.me/ahmedesam10_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تحويل الصور إلى PDF</h3><a href="https://t.me/ahmedesam11_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت اهداء الأغاني</h3><a href="https://t.me/ahmedesam12_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت صانع كودات جاهزة</h3><a href="https://t.me/ahmedesam13_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت المتجر</h3><a href="https://t.me/ahmedesam14_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت ادارة حساب</h3><a href="https://t.me/ahmedesam15_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت الموافقة على الإنضمام</h3><a href="https://t.me/ahmedesam16_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت حساب العمر</h3><a href="https://t.me/ahmedesam17_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تحقق من الوهمي</h3><a href="https://t.me/ahmedesam18_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت حماية القنوات</h3><a href="https://t.me/ahmedesam19_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت صنع ملصقات</h3><a href="https://t.me/ahmedesam21_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت كتابة حقوق على الصور</h3><a href="https://t.me/ahmedesam22_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تمويل قنوات</h3><a href="https://t.me/ahmedesam23_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت إصلاح جودة الصورة</h3><a href="https://t.me/ahmedesam24_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت معاني أسماء</h3><a href="https://t.me/ahmedesam25_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت سايت</h3><a href="https://t.me/ahmedesam26_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت حجره ورقة مقص</h3><a href="https://t.me/ahmedesam27_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت زخرفة</h3><a href="https://t.me/ahmedesam28_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت التعرف على الموسيقى</h3><a href="https://t.me/ahmedesam29_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت صارحني</h3><a href="https://t.me/ahmedesam30_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت أوامر</h3><a href="https://t.me/ahmedesam31_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تحويل صوت إلى كتابة</h3><a href="https://t.me/ahmedesam32_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت البلورة السحرية</h3><a href="https://t.me/ahmedesam33_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت بروكسي</h3><a href="https://t.me/ahmedesam34_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت لعبة XO</h3><a href="https://t.me/ahmedesam35_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت تحويل صيغ</h3><a href="https://t.me/ahmedesam36_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت البصمات</h3><a href="https://t.me/ahmedesam37_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت ناسخ الكتابة</h3><a href="https://t.me/ahmedesam38_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت لعبة روليت</h3><a href="https://t.me/ahmedesam39_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-telegram"></i> بوت ادارة منشورات القناة</h3><a href="https://t.me/ahmedesam40_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fas fa-robot"></i> تطبيق Poe</h3><a href="https://poe.com/KINGTECHNOLOGY" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fas fa-robot"></i> تطبيق CiciAI</h3><a href="https://ciciai.com/bot/mUw0OwEX" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fas fa-robot"></i> تطبيق Monica</h3><a href="https://monica.im/share/bot?botId=808yNATK" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-whatsapp"></i> تطبيق WhatsApp (AI)</h3><a href="https://wa.me/ais/1032993055357453?s=5" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-facebook-messenger"></i> تطبيق Messenger (AI)</h3><a href="https://m.me/1434139967970296?is_ai=1" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fab fa-instagram"></i> تطبيق Instagram (AI)</h3><a href="https://aistudio.instagram.com/ai/1032993055357453?utm_source=ai_agent" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fas fa-brain"></i> تطبيق Gemini</h3><a href="https://gemini.google.com/gem/9ac6476fa956" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
-                <div class="bot-card"><div class="bot-content"><h3><i class="fas fa-search"></i> تطبيق You.com</h3><a href="https://you.com/?chatMode=user_mode_d5c26722-2964-4c0f-8f89-6da18b1d55ba" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a></div></div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوتات ahmedesam</h3>
+                        <a href="https://t.me/ahmedesam_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت ترجمة</h3>
+                        <a href="https://t.me/ahmedesam1_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت التحدث مع الذكاء الاصطناعي</h3>
+                        <a href="https://t.me/ahmedesam2_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تحميل من سوشيال ميديا</h3>
+                        <a href="https://t.me/ahmedesam3_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تحويل الكلمات إلى صور</h3>
+                        <a href="https://t.me/ahmedesam4_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تواصل</h3>
+                        <a href="https://t.me/ahmedesam5_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت صنع لوجو</h3>
+                        <a href="https://t.me/ahmedesam6_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت ايميل مؤقت</h3>
+                        <a href="https://t.me/ahmedesam7_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت اعلانات</h3>
+                        <a href="https://t.me/ahmedesam8_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت الجني الأزرق</h3>
+                        <a href="https://t.me/ahmedesam9_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت صانع بوتات</h3>
+                        <a href="https://t.me/ahmedesam10_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تحويل الصور إلى PDF</h3>
+                        <a href="https://t.me/ahmedesam11_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت اهداء الأغاني</h3>
+                        <a href="https://t.me/ahmedesam12_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت صانع كودات جاهزة</h3>
+                        <a href="https://t.me/ahmedesam13_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت المتجر</h3>
+                        <a href="https://t.me/ahmedesam14_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت ادارة حساب</h3>
+                        <a href="https://t.me/ahmedesam15_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت الموافقة على الإنضمام</h3>
+                        <a href="https://t.me/ahmedesam16_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت حساب العمر</h3>
+                        <a href="https://t.me/ahmedesam17_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تحقق من الوهمي</h3>
+                        <a href="https://t.me/ahmedesam18_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت حماية القنوات</h3>
+                        <a href="https://t.me/ahmedesam19_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت صنع ملصقات</h3>
+                        <a href="https://t.me/ahmedesam21_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت كتابة حقوق على الصور</h3>
+                        <a href="https://t.me/ahmedesam22_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تمويل قنوات</h3>
+                        <a href="https://t.me/ahmedesam23_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت إصلاح جودة الصورة</h3>
+                        <a href="https://t.me/ahmedesam24_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت معاني أسماء</h3>
+                        <a href="https://t.me/ahmedesam25_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت سايت</h3>
+                        <a href="https://t.me/ahmedesam26_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت حجره ورقة مقص</h3>
+                        <a href="https://t.me/ahmedesam27_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت زخرفة</h3>
+                        <a href="https://t.me/ahmedesam28_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت التعرف على الموسيقى</h3>
+                        <a href="https://t.me/ahmedesam29_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت صارحني</h3>
+                        <a href="https://t.me/ahmedesam30_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت أوامر</h3>
+                        <a href="https://t.me/ahmedesam31_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تحويل صوت إلى كتابة</h3>
+                        <a href="https://t.me/ahmedesam32_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت البلورة السحرية</h3>
+                        <a href="https://t.me/ahmedesam33_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت بروكسي</h3>
+                        <a href="https://t.me/ahmedesam34_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت لعبة XO</h3>
+                        <a href="https://t.me/ahmedesam35_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت تحويل صيغ</h3>
+                        <a href="https://t.me/ahmedesam36_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت البصمات</h3>
+                        <a href="https://t.me/ahmedesam37_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت ناسخ الكتابة</h3>
+                        <a href="https://t.me/ahmedesam38_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت لعبة روليت</h3>
+                        <a href="https://t.me/ahmedesam39_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-telegram"></i> بوت ادارة منشورات القناة</h3>
+                        <a href="https://t.me/ahmedesam40_bot" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fas fa-robot"></i> تطبيق Poe</h3>
+                        <a href="https://poe.com/KINGTECHNOLOGY" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fas fa-robot"></i> تطبيق CiciAI</h3>
+                        <a href="https://ciciai.com/bot/mUw0OwEX" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fas fa-robot"></i> تطبيق Monica</h3>
+                        <a href="https://monica.im/share/bot?botId=808yNATK" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-whatsapp"></i> تطبيق WhatsApp (AI)</h3>
+                        <a href="https://wa.me/ais/1032993055357453?s=5" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-facebook-messenger"></i> تطبيق Messenger (AI)</h3>
+                        <a href="https://m.me/1434139967970296?is_ai=1" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fab fa-instagram"></i> تطبيق Instagram (AI)</h3>
+                        <a href="https://aistudio.instagram.com/ai/1032993055357453?utm_source=ai_agent" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fas fa-brain"></i> تطبيق Gemini</h3>
+                        <a href="https://gemini.google.com/gem/9ac6476fa956" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
+                <div class="bot-card">
+                    <div class="bot-content">
+                        <h3><i class="fas fa-search"></i> تطبيق You.com</h3>
+                        <a href="https://you.com/?chatMode=user_mode_d5c26722-2964-4c0f-8f89-6da18b1d55ba" class="bot-link" target="_blank" rel="noopener noreferrer">دخول للقسم</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
     <section id="contact">
         <div class="container">
             <div class="section-title">
                 <h2>طرق التواصل معنا</h2>
             </div>
             <div class="contact-methods">
-                <div class="contact-card"><div class="contact-icon-container"><i class="fas fa-phone-alt"></i></div><h3>الهواتف</h3><p>+201010793073</p><p>+201508959686</p><a href="tel:+201010793073" class="contact-link">اتصل الآن (+2010)</a><a href="tel:+201508959686" class="contact-link">اتصل الآن (+2015)</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-whatsapp"></i></div><h3>واتساب</h3><a href="https://wa.me/201010793073" target="_blank" rel="noopener noreferrer" class="contact-link">واتساب (+2010)</a><a href="https://wa.me/201508959686" target="_blank" rel="noopener noreferrer" class="contact-link">واتساب (+2015)</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-viber"></i></div><h3>فايبر</h3><a href="viber://chat?number=+201010793073" class="contact-link">فايبر (+2010)</a><a href="viber://chat?number=+201508959686" class="contact-link">فايبر (+2015)</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-facebook-messenger"></i></div><h3>ماسنجر</h3><a href="https://m.me/ahmedesam" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر ماسنجر</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-facebook"></i></div><h3>فيسبوك</h3><a href="https://www.facebook.com/share/1AE5UoaFye/" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة صفحة الفيسبوك</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-telegram"></i></div><h3>تيليجرام</h3><a href="https://t.me/201010793073" target="_blank" rel="noopener noreferrer" class="contact-link">تيليجرام (+2010)</a><a href="https://t.me/201508929686" target="_blank" rel="noopener noreferrer" class="contact-link">تيليجرام (+2015)</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fas fa-envelope"></i></div><h3>البريد الإلكتروني</h3><a href="mailto:ahmedesam5177@gmail.com" class="contact-link">ahmedesam5177@gmail.com</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-instagram"></i></div><h3>إنستجرام</h3><a href="https://www.instagram.com/ahmedesam347/profilecard/?igsh=YW9hdXJkNzZlYXQw" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة إنستجرام</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-threads"></i></div><h3>Threads</h3><a href="https://www.threads.net/@ahmedesam137" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة Threads</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-twitter"></i></div><h3>تويتر (X)</h3><a href="https://x.com/AhmedE56810?t=7xT6MiMTylMAbLh7o4TRDg&s=09" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تويتر</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-snapchat"></i></div><h3>سناب شات</h3><a href="https://www.snapchat.com/add/ahmed_esam24747?share_id=FWJKCPst6Ec&locale=ar-AE" target="_blank" rel="noopener noreferrer" class="contact-link">إضافة سناب شات</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-youtube"></i></div><h3>يوتيوب</h3><a href="https://youtube.com/@ahmedesam-o7v?si=O0llUgx2lDpnv1ZA" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة يوتيوب</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-tiktok"></i></div><h3>تيك توك</h3><a href="https://www.tiktok.com/@ahmedesam6500?_t=8qttAOU2YRp&_r=1" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تيك توك</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-twitch"></i></div><h3>تويتش</h3><a href="https://www.twitch.tv/ahmedesam_147369" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تويتش</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-line"></i></div><h3>لاين</h3><a href="https://line.me/ti/p/hueVD57bb_" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر لاين</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-weixin"></i></div><h3>وي شات</h3><a href="https://weixin.qq.com/r/wxid_typbuqje7tmy22" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر وي شات</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-kickstarter-k"></i></div><h3>كيك</h3><a href="https://kik.me/AhmedEsam147369" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر كيك</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-pinterest"></i></div><h3>بنترست</h3><a href="https://pin.it/28ZulJwKY" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة بنترست</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-tumblr"></i></div><h3>تمبلر</h3><a href="https://www.tumblr.com/ahmedesam147369?source=share" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تمبلر</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fas fa-question-circle"></i></div><h3>Ask.fm</h3><a href="https://app.ask.fm/ahmedesam5177" target="_blank" rel="noopener noreferrer" class="contact-link">اسألني على Ask.fm</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-soundcloud"></i></div><h3>ساوند كلاود</h3><a href="https://on.soundcloud.com/HUqhv" target="_blank" rel="noopener noreferrer" class="contact-link">استمع على ساوند كلاود</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-spotify"></i></div><h3>سبوتيفاي</h3><a href="https://open.spotify.com/user/31bhk2q4ysef4fvpyz6rxaygapgu?si=00oFStSXSfissCSUnc0gyQ" target="_blank" rel="noopener noreferrer" class="contact-link">استمع على سبوتيفاي</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-linkedin"></i></div><h3>لينكد إن</h3><a href="https://www.linkedin.com/in/ahmed-esam-4b859535b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على لينكد إن</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-skype"></i></div><h3>سكايب</h3><a href="https://join.skype.com/invite/NF8sA5qNpG5D" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر سكايب</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-github"></i></div><h3>جيت هب</h3><a href="https://github.com/AEK_admin" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على جيت هب</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-vk"></i></div><h3>VK</h3><a href="https://vk.com/id861862873" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على VK</a></div>
-                <div class="contact-card"><div class="contact-icon-container"><i class="fab fa-meta"></i></div><h3>Oculus (Meta)</h3><a href="https://horizon.meta.com/profile/AhmedEsam/?hws=JhpGUVxVM8" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على Meta Horizon</a></div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fas fa-phone-alt"></i></div>
+                    <h3>الهواتف</h3>
+                    <p>+201010793073</p>
+                    <p>+201508959686</p>
+                    <a href="tel:+201010793073" class="contact-link">اتصل الآن (+2010)</a>
+                    <a href="tel:+201508959686" class="contact-link">اتصل الآن (+2015)</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-whatsapp"></i></div>
+                    <h3>واتساب</h3>
+                    <a href="https://wa.me/201010793073" target="_blank" rel="noopener noreferrer" class="contact-link">واتساب (+2010)</a>
+                    <a href="https://wa.me/201508959686" target="_blank" rel="noopener noreferrer" class="contact-link">واتساب (+2015)</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-viber"></i></div>
+                    <h3>فايبر</h3>
+                    <a href="viber://chat?number=+201010793073" class="contact-link">فايبر (+2010)</a>
+                    <a href="viber://chat?number=+201508959686" class="contact-link">فايبر (+2015)</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-facebook-messenger"></i></div>
+                    <h3>ماسنجر</h3>
+                    <a href="https://m.me/ahmedesam" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر ماسنجر</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-facebook"></i></div>
+                    <h3>فيسبوك</h3>
+                    <a href="https://www.facebook.com/share/1AE5UoaFye/" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة صفحة الفيسبوك</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-telegram"></i></div>
+                    <h3>تيليجرام</h3>
+                    <a href="https://t.me/201010793073" target="_blank" rel="noopener noreferrer" class="contact-link">تيليجرام (+2010)</a>
+                    <a href="https://t.me/201508929686" target="_blank" rel="noopener noreferrer" class="contact-link">تيليجرام (+2015)</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fas fa-envelope"></i></div>
+                    <h3>البريد الإلكتروني</h3>
+                    <a href="mailto:ahmedesam5177@gmail.com" class="contact-link">ahmedesam5177@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-instagram"></i></div>
+                    <h3>إنستجرام</h3>
+                    <a href="https://www.instagram.com/ahmedesam347/profilecard/?igsh=YW9hdXJkNzZlYXQw" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة إنستجرام</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-threads"></i></div>
+                    <h3>Threads</h3>
+                    <a href="https://www.threads.net/@ahmedesam137" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة Threads</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-twitter"></i></div>
+                    <h3>تويتر (X)</h3>
+                    <a href="https://x.com/AhmedE56810?t=7xT6MiMTylMAbLh7o4TRDg&s=09" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تويتر</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-snapchat"></i></div>
+                    <h3>سناب شات</h3>
+                    <a href="https://www.snapchat.com/add/ahmed_esam24747?share_id=FWJKCPst6Ec&locale=ar-AE" target="_blank" rel="noopener noreferrer" class="contact-link">إضافة سناب شات</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-youtube"></i></div>
+                    <h3>يوتيوب</h3>
+                    <a href="https://youtube.com/@ahmedesam-o7v?si=O0llUgx2lDpnv1ZA" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة يوتيوب</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-tiktok"></i></div>
+                    <h3>تيك توك</h3>
+                    <a href="https://www.tiktok.com/@ahmedesam6500?_t=8qttAOU2YRp&_r=1" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تيك توك</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-twitch"></i></div>
+                    <h3>تويتش</h3>
+                    <a href="https://www.twitch.tv/ahmedesam_147369" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تويتش</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-line"></i></div>
+                    <h3>لاين</h3>
+                    <a href="https://line.me/ti/p/hueVD57bb_" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر لاين</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-weixin"></i></div>
+                    <h3>وي شات</h3>
+                    <a href="https://weixin.qq.com/r/wxid_typbuqje7tmy22" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر وي شات</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-kickstarter-k"></i></div>
+                    <h3>كيك</h3>
+                    <a href="https://kik.me/AhmedEsam147369" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر كيك</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-pinterest"></i></div>
+                    <h3>بنترست</h3>
+                    <a href="https://pin.it/28ZulJwKY" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة بنترست</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-tumblr"></i></div>
+                    <h3>تمبلر</h3>
+                    <a href="https://www.tumblr.com/ahmedesam147369?source=share" target="_blank" rel="noopener noreferrer" class="contact-link">زيارة تمبلر</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fas fa-question-circle"></i></div>
+                    <h3>Ask.fm</h3>
+                    <a href="https://app.ask.fm/ahmedesam5177" target="_blank" rel="noopener noreferrer" class="contact-link">اسألني على Ask.fm</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-soundcloud"></i></div>
+                    <h3>ساوند كلاود</h3>
+                    <a href="https://on.soundcloud.com/HUqhv" target="_blank" rel="noopener noreferrer" class="contact-link">استمع على ساوند كلاود</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-spotify"></i></div>
+                    <h3>سبوتيفاي</h3>
+                    <a href="https://open.spotify.com/user/31bhk2q4ysef4fvpyz6rxaygapgu?si=00oFStSXSfissCSUnc0gyQ" target="_blank" rel="noopener noreferrer" class="contact-link">استمع على سبوتيفاي</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-linkedin"></i></div>
+                    <h3>لينكد إن</h3>
+                    <a href="https://www.linkedin.com/in/ahmed-esam-4b859535b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على لينكد إن</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-skype"></i></div>
+                    <h3>سكايب</h3>
+                    <a href="https://join.skype.com/invite/NF8sA5qNpG5D" target="_blank" rel="noopener noreferrer" class="contact-link">تواصل عبر سكايب</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-github"></i></div>
+                    <h3>جيت هب</h3>
+                    <a href="https://github.com/AEK_admin" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على جيت هب</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-vk"></i></div>
+                    <h3>VK</h3>
+                    <a href="https://vk.com/id861862873" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على VK</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon-container"><i class="fab fa-meta"></i></div>
+                    <h3>Oculus (Meta)</h3>
+                    <a href="https://horizon.meta.com/profile/AhmedEsam/?hws=JhpGUVxVM8" target="_blank" rel="noopener noreferrer" class="contact-link">الملف الشخصي على Meta Horizon</a>          
+                </div>
             </div>
         </div>
     </section>
-    
+
     <div id="backToTop" title="رجوع للأعلى">  
-      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#007bff" viewBox="0 0 24 24"><path d="M12 4l-8 8h6v8h4v-8h6z"/></svg>  
+        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#007bff" viewBox="0 0 24 24">  
+            <path d="M12 4l-8 8h6v8h4v-8h6z"/>  
+        </svg>  
     </div>  
+    <style>  
+        #backToTop {  
+            position: fixed;  
+            bottom: 3px;             /* مرفوع 85px */  
+            left: 50%;  
+            transform: translateX(-50%);  
+            z-index: 99999;  
+            cursor: pointer;  
+            display: none;            /* مخفي في البداية */  
+        }  
+        #backToTop svg {  
+            filter: drop-shadow(0 0 10px rgba(0, 123, 255, 0.7));  
+            transition: all 0.4s ease-in-out;  
+            animation: pulse 2s infinite; /* نبض متوهج */  
+        }  
+        #backToTop:hover svg {  
+            fill: #ff6600;  
+            filter: drop-shadow(0 0 20px rgba(255, 102, 0, 0.9));  
+            transform: scale(1.2) translateY(-100px); /* يكبر سنة ويتحرك لفوق */  
+        }  
+        @keyframes pulse {  
+            0%   { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
+            50%  { filter: drop-shadow(0 0 20px rgba(0, 123, 255, 1)); }  
+            100% { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
+        }  
+    </style>  
+    <script>  
+        const backToTopBtn = document.getElementById("backToTop");  
+        // إظهار الأيقونة عند النزول  
+        window.addEventListener("scroll", () => {  
+            if (window.scrollY > 200) {  
+                backToTopBtn.style.display = "block";  
+            } else {  
+                backToTopBtn.style.display = "none";  
+            }  
+        });  
+        // التمرير لأعلى عند الضغط  
+        backToTopBtn.addEventListener("click", () => {  
+            window.scrollTo({ top: 0, behavior: "smooth" });  
+        });  
+    </script>
 
-    <div class="fab-container">
-        <ul class="fab-actions">
-            <li class="fab-action-item">
-                <a id="chatBtn-fab" class="fab-action-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 24 24"><path d="M20 2H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14l4 4V4c0-1.103-.897-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
-                </a>
-                <span class="fab-label">Chat</span>
-            </li>
-            <li class="fab-action-item">
-                 <div id="feedback-container" class="fab-action-btn">
-                    </div>
-                 <span class="fab-label">Feedback</span>
-            </li>
-            <li class="fab-action-item">
-                 <button id="darkModeToggle" class="fab-action-btn">🌗</button>
-                 <span class="fab-label">Theme</span>
-            </li>
-            <li class="fab-action-item">
-                <div id="google_translate_element_fab" class="fab-action-btn">
-                    <div id="google_translate_element" class="translate-icon"></div>
-                </div>
-                <span class="fab-label">Translate</span>
-            </li>
-        </ul>
-    
-        <button class="main-fab">
-            <i class="fas fa-bars"></i>
-        </button>
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+    <div id="chatModal" style="display: none;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);width: 375px;height: 600px;background-color: #fff;border-radius: 10px;box-shadow: 0 8px 20px rgba(0,0,0,0.3);z-index: 9998;overflow: hidden;">
+        <div id="agentContainer" style="width:100%;height:100%;"></div>
     </div>
-
-    <div id="chatModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 375px; height: 600px; background-color: #fff; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 9998; overflow: hidden;">  
-      <div id="agentContainer" style="width:100%;height:100%;"></div>  
-    </div>
+    <script>
+        const btn = document.getElementById('chatBtn');
+        const modal = document.getElementById('chatModal');
+        btn.addEventListener('click', function() {
+            if (modal.style.display === "none") {
+                modal.style.display = "block";
+                // تهيئة الـ Agent داخل الـ div  
+                window.AgentInitializer.initModalView({
+                    rootId: "agentContainer",
+                    formID: "0199160917cb749ba85bb3fba78e15f4cda9",
+                    queryParams: ["skipWelcome=1"],
+                    domain: "https://www.jotform.com",
+                    isInitialOpen: true,
+                    isDraggable: true,
+                    variant: false,
+                    isVoice: false
+                });
+            } else {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+    <script src="https://cdn.jotfor.ms/s/static/latest/static/feedback2.js"></script>
+    <script>
+        var componentID = new JotformFeedback({
+            type: 0,
+            width: 700,
+            height: 500,
+            fontColor: "#FFFFFF",
+            background: "#F59202",
+            isCardForm: false,
+            formId: "252474306808561",
+            buttonText: "Feedback",
+            buttonSide: "right",
+            buttonAlign: "top",
+            base: "https://form.jotform.com/",
+        }).componentID;
+    </script>
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
+    <script>
+        window.jotformEmbedHandler("iframe[id='" + componentID + "_iframe']", "https://form.jotform.com/")
+    </script>
 
     <footer>
         <div class="container">
@@ -1124,6 +1869,7 @@
                     <h3>CIW</h3>
                     <p>علامة تجارية تقنية تقدم حلولاً مبتكرة في جميع المجالات.</p>
                 </div>
+     
                 <div class="footer-section">
                     <h3>روابط سريعة</h3>
                     <ul class="footer-links">
@@ -1140,110 +1886,85 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>© CIW <span id="currentYear">2025</span>. جميع الحقوق محفوظة لشركتنا.</p>     
+                <p>© CIW <span id="currentYear">2025</span>. جميع الحقوق محفوظة لشركتنا.</p>
             </div>
         </div>
     </footer>
-    
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
-    <script src="https://cdn.jotfor.ms/s/static/latest/static/feedback2.js"></script>
-    <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
-    
+
     <script>
-        // ===================================
-        //      ALL PAGE SCRIPTS
-        // ===================================
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            // --- Update Copyright Year ---
+        document.addEventListener('DOMContentLoaded', function() {
             const currentYearSpan = document.getElementById('currentYear');
             if (currentYearSpan) {
                 currentYearSpan.textContent = new Date().getFullYear();
             }
+        });
+    </script>
 
-            // --- Dark Mode Logic ---
-            const toggleBtn = document.getElementById("darkModeToggle");  
-            const body = document.body;  
-            if (localStorage.getItem("theme") === "dark") {  
-                body.classList.add("dark-mode");  
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Create the FAB HTML structure and add it to the page
+        const fabContainer = document.createElement('div');
+        fabContainer.className = 'fab-container';
+        fabContainer.innerHTML = `
+            <div class="fab-options">
+                <div id="fab-dark-mode-wrapper" class="fab-option" title="Dark/Light Mode"></div>
+                <div id="fab-translate-wrapper" class="fab-option" title="Translate"></div>
+                <div id="fab-chat-wrapper" class="fab-option" title="Chat"></div>
+                <div id="fab-feedback-wrapper" class="fab-option" title="Feedback"></div>
+            </div>
+            <div class="fab-main-button">
+                <i class="fas fa-plus"></i>
+            </div>
+        `;
+        document.body.appendChild(fabContainer);
+
+        // 2. Find the original buttons and move them into the new FAB structure
+        // This preserves all their original functionality.
+        const darkModeBtn = document.getElementById('darkModeToggle');
+        const translateBtn = document.getElementById('google_translate_element');
+        const chatBtn = document.getElementById('chatBtn');
+        
+        if (darkModeBtn) {
+            document.getElementById('fab-dark-mode-wrapper').appendChild(darkModeBtn);
+        }
+        if (translateBtn) {
+            document.getElementById('fab-translate-wrapper').appendChild(translateBtn);
+        }
+        if (chatBtn) {
+            document.getElementById('fab-chat-wrapper').appendChild(chatBtn);
+        }
+
+        // The Jotform feedback button is loaded dynamically, so we must wait for it to appear.
+        // A MutationObserver is the most reliable way to do this.
+        const moveJotformButton = () => {
+            const feedbackBtn = document.querySelector('.jotform-feedback-link');
+            // Check if the button exists and hasn't already been moved
+            if (feedbackBtn && !document.getElementById('fab-feedback-wrapper').contains(feedbackBtn)) {
+                document.getElementById('fab-feedback-wrapper').appendChild(feedbackBtn);
+                observer.disconnect(); // Stop observing once we've found and moved the button
             }
-            toggleBtn.addEventListener("click", () => {  
-                body.classList.toggle("dark-mode");  
-                localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");  
-            });
+        };
+        
+        const observer = new MutationObserver(moveJotformButton);
+        observer.observe(document.body, { childList: true, subtree: true });
+        moveJotformButton(); // Initial check in case it's already loaded
 
-            // --- Back to Top Button Logic ---
-            const backToTopBtn = document.getElementById("backToTop");  
-            window.addEventListener("scroll", () => {  
-                backToTopBtn.style.display = (window.scrollY > 200) ? "block" : "none";  
-            });  
-            backToTopBtn.addEventListener("click", () => {  
-                window.scrollTo({ top: 0, behavior: "smooth" });  
-            });
-
-            // --- Chat Modal Logic ---
-            const chatFabBtn = document.getElementById('chatBtn-fab');  
-            const modal = document.getElementById('chatModal');  
-            let isChatInitialized = false;
-            chatFabBtn.addEventListener('click', function() {  
-                const shouldOpen = modal.style.display === "none";
-                modal.style.display = shouldOpen ? "block" : "none";
-                if (shouldOpen && !isChatInitialized) {
-                    window.AgentInitializer.initModalView({  
-                        rootId: "agentContainer",  
-                        formID: "0199160917cb749ba85bb3fba78e15f4cda9",  
-                        queryParams: ["skipWelcome=1"],  
-                        domain: "https://www.jotform.com",  
-                        isInitialOpen: true,  
-                        isDraggable: true,  
-                        variant: false,  
-                        isVoice: false  
-                    });
-                    isChatInitialized = true;
-                }
-            });
-
-            // --- FAB (Floating Action Button) Logic ---
-            const fabContainer = document.querySelector('.fab-container');
-            const mainFab = document.querySelector('.main-fab');
-            if (mainFab) {
-                mainFab.addEventListener('click', () => {
-                    fabContainer.classList.toggle('active');
-                });
-            }
-
-            // --- Jotform Button Initialization and Relocation ---
-            var componentID = new JotformFeedback({    
-                type: 0, width: 700, height: 500, fontColor: "#FFFFFF",    
-                background: "#F59202", isCardForm: false, formId: "252474306808561",
-                buttonText: "Feedback", buttonSide: "right", buttonAlign: "top",    
-                base: "https://form.jotform.com/",    
-            }).componentID;    
-            window.jotformEmbedHandler("iframe[id='" + componentID + "_iframe']", "https://form.jotform.com/");
-
-            const feedbackContainer = document.getElementById('feedback-container');
-            if (feedbackContainer) {
-                const interval = setInterval(() => {
-                    const jotformButton = document.querySelector('a.jotform-feedback-link');
-                    if (jotformButton) {
-                        feedbackContainer.appendChild(jotformButton);
-                        clearInterval(interval);
-                    }
-                }, 200);
-            }
+        // 3. Add the open/close functionality to the main FAB button
+        const mainFab = fabContainer.querySelector('.fab-main-button');
+        const fabIcon = mainFab.querySelector('i');
+        
+        mainFab.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click from bubbling up to the document
+            fabContainer.classList.toggle('open');
         });
 
-        // --- Google Translate Initialization ---
-        function googleTranslateElementInit() {  
-            new google.translate.TranslateElement({  
-                pageLanguage: 'ar',  
-                autoDisplay: true  
-            }, 'google_translate_element');  
-            if (!document.cookie.includes("googtrans=/ar/ar")) {  
-                document.cookie = "googtrans=/ar/ar;path=/;";  
-            }  
-        }  
+        // 4. (Optional but recommended) Close the FAB menu when clicking anywhere else on the page
+        document.addEventListener('click', function(event) {
+            if (!fabContainer.contains(event.target) && fabContainer.classList.contains('open')) {
+                fabContainer.classList.remove('open');
+            }
+        });
+    });
     </script>
 </body>
 </html>
