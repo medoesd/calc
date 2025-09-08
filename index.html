@@ -724,6 +724,13 @@
         #google_translate_element {
             background-color: #fff !important;
         }
+        
+        /* ✅ NEW: Google Translate Icon Style */
+        #google_translate_element i {
+            font-size: 24px;
+            color: var(--dark-color);
+        }
+
 
         /* Chat Button */
         #chatBtn {
@@ -765,7 +772,8 @@
 <body>
 
     <div style="position: fixed !important; bottom: 0px !important; width: 100% !important; height: 55px !important; z-index: 9999 !important;">
-<div id="google_translate_element" class="translate-icon"></div>  <script>  
+<div id="google_translate_element" class="translate-icon"><i class="fa-solid fa-language"></i></div>  
+<script>  
   // 📌 اجعل الترجمة تبدأ دائمًا بالعربية  
   if (!document.cookie.includes("googtrans=/ar/ar")) {  
     document.cookie = "googtrans=/ar/ar;path=/;";  
@@ -794,13 +802,7 @@
     z-index: 9999;  
   }  
   
-  /* الأيقونة 🌐 */  
-  .translate-icon::before {  
-    content: "🌐";  
-    font-size: 35px; /* ✅ MODIFIED: Was 49px */  
-    z-index: 1;  
-    pointer-events: none;  
-  }  
+  /* ✅ REMOVED CSS: The .translate-icon::before rule is gone */
   
   /* إخفاء النصوص الجانبية */  
   .goog-te-gadget {  
