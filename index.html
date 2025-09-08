@@ -631,278 +631,274 @@
                 height: 120px;
             }
         }
+    </style>
 
-        /* --- FAB STYLES START --- */
-
-        /* Main Container for the FAB */
+    <style>
+        /* FAB Styles */
         .fab-container {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            bottom: 25px;
+            left: 25px;
             z-index: 10000;
             display: flex;
-            flex-direction: column-reverse; /* Places main button below the options */
+            flex-direction: column-reverse;
             align-items: center;
         }
 
-        /* Main Toggle Button */
-        .fab-main-button {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 50%;
+        .fab-main-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-size: 28px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
-            border: 2px solid var(--accent-color);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
-        .fab-main-button:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        .fab-container.active .fab-main-btn {
+            transform: rotate(45deg);
         }
 
-        /* Rotates the icon when the menu is open */
-        .fab-container.open .fab-main-button {
-            transform: rotate(225deg);
-        }
-
-        /* Container for the option buttons */
-        .fab-options {
+        .fab-actions {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 15px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            transform: translateY(20px) scale(0.9);
-            opacity: 0;
-            visibility: hidden; /* Hide when closed */
         }
 
-        /* Show the options when the menu is open */
-        .fab-container.open .fab-options {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Wrapper for each individual option button */
-        .fab-option {
+        /* Common style for all action items */
+        .fab-actions > * {
             margin-bottom: 15px;
-        }
-
-        /* HIDE ORIGINAL BUTTONS from their original fixed positions */
-        /* This targets only the top-level buttons to avoid hiding them once they are moved into the FAB */
-        body > #darkModeToggle,
-        body > #google_translate_element,
-        body > #chatBtn,
-        body > .jotform-feedback-link {
-            display: none !important;
-        }
-
-        /* --- RESET STYLES FOR MOVED BUTTONS --- */
-        /* This is the most important part: It overrides their original fixed positioning and styles */
-        .fab-option > * {
-            position: static !important;
-            transform: none !important;
-            width: 48px !important;
-            height: 48px !important;
-            border-radius: 50% !important;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            margin: 0 !important;
-            font-size: 22px !important;
-            background-color: white !important;
-            color: var(--dark-color) !important;
-            cursor: pointer;
-        }
-
-        /* Specific Resets for each button */
-        .fab-option #darkModeToggle {
-            background: #fff !important;
-            color: #333 !important;
-        }
-
-        .fab-option #google_translate_element {
-            background: white !important;
-            border: none !important;
-            overflow: hidden; /* Hides the dropdown arrow from poking out */
-        }
-
-        .fab-option #google_translate_element .translate-icon::before {
-            font-size: 24px !important; /* Make the globe icon fit */
-        }
-
-        .fab-option #google_translate_element .goog-te-gadget {
-            font-size: 0 !important; /* Hide the text like "Powered by" */
-        }
-
-        .fab-option #chatBtn {
-            background-color: #0075E3 !important;
-        }
-
-        .fab-option #chatBtn svg {
-            width: 24px !important;
-            height: 24px !important;
-            fill: #fff !important;
-        }
-
-        .fab-option .jotform-feedback-link {
-            background: #F59202 !important;
-            color: white !important;
-            text-indent: -9999px; /* Hide the "Feedback" text */
-            /* Use an SVG icon instead of text */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>') !important;
-            background-repeat: no-repeat !important;
-            background-position: center center !important;
-            background-size: 24px 24px !important;
-        }
-
-        /* --- FAB STYLES END --- */
-
-    </style>
-</head>
-<body>
-    
-    <div id="google_translate_element" class="translate-icon"></div>
-    <script>
-        // 📌 اجعل الترجمة تبدأ دائمًا بالعربية  
-        if (!document.cookie.includes("googtrans=/ar/ar")) {
-            document.cookie = "googtrans=/ar/ar;path=/;";
-        }
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'ar',
-                autoDisplay: true
-            }, 'google_translate_element');
-        }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <style>
-        /* زر الترجمة */
-        .translate-icon {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px) scale(0.8);
+            transition: all 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border-radius: 50%; /* Make everything circular */
+            display: flex !important; /* Force flex for alignment */
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 9999;
+            background-color: #fff; /* Common background */
         }
-        /* الأيقونة 🌐 */
-        .translate-icon::before {
-            content: "🌐";
-            font-size: 49px; /* نفس مقاسك */
-            z-index: 1;
-            pointer-events: none;
+
+        /* Reveal on active */
+        .fab-container.active .fab-actions > * {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
         }
-        /* إخفاء النصوص الجانبية */
-        .goog-te-gadget {
-            font-size: 0 !important;
-            color: transparent !important;
+
+        /* Staggered transition delays */
+        .fab-container.active .fab-actions > *:nth-child(4) { transition-delay: 0.05s; }
+        .fab-container.active .fab-actions > *:nth-child(3) { transition-delay: 0.1s; }
+        .fab-container.active .fab-actions > *:nth-child(2) { transition-delay: 0.15s; }
+        .fab-container.active .fab-actions > *:nth-child(1) { transition-delay: 0.2s; }
+
+        /* Specific styles for each button */
+
+        /* Dark Mode Toggle */
+        #darkModeToggle {
+            width: 50px !important;
+            height: 50px !important;
+            font-size: 24px !important;
+            background: #333 !important;
+            color: #fff !important;
         }
-        .goog-te-gadget span,
-        .goog-te-gadget-simple,
-        .goog-te-banner-frame,
-        .goog-logo-link {
+
+        /* Google Translate */
+        #google_translate_element {
+            width: 50px !important;
+            height: 50px !important;
+        }
+
+        /* Chat Button */
+        #chatBtn {
+            width: 50px !important;
+            height: 50px !important;
+            background-color: #0075E3 !important;
+        }
+        #chatBtn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Jotform Feedback */
+        .jotform-feedback-link {
+            width: 50px !important;
+            height: 50px !important;
+            background: #F59202 !important;
+            color: white !important;
+            font-size: 10px !important; /* Adjust text size */
+            line-height: 1.2 !important;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+        
+        /* Hide original container that holds the dark mode and translate buttons */
+        div[style*="position: fixed !important; bottom: 0px"] {
             display: none !important;
         }
-        /* القائمة المنسدلة شفافة فوق الأيقونة */
-        .translate-icon select {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 2;
-        }
     </style>
-    
-    <button id="darkModeToggle" style="background:#333;color:#fff;border:none;border-radius:50%;width:55px;height:55px;font-size:50px;cursor:pointer;z-index:99999;">🌗</button>
-    <style>
-        /* الوضع الداكن */
-        body.dark-mode {
-            background-color: #121212 !important;
-            color: #e0e0e0 !important;
-        }
-        body.dark-mode header {
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a 70%) !important;
-            color: #f1f1f1 !important;
-        }
-        body.dark-mode nav {
-            background-color: #1f1f1f !important;
-        }
-        body.dark-mode .nav-links a {
-            color: #ddd !important;
-        }
-        body.dark-mode .nav-links a:hover,
-        body.dark-mode .nav-links a.active-link {
-            color: #90caf9 !important;
-        }
-        body.dark-mode section {
-            background-color: #181818 !important;
-        }
-        body.dark-mode .service-card,
-        body.dark-mode .product-card,
-        body.dark-mode .bot-card,
-        body.dark-mode .contact-card,
-        body.dark-mode .logo-item {
-            background-color: #1f1f1f !important;
-            color: #f1f1f1 !important;
-            border: 1px solid #333 !important;
-        }
-        body.dark-mode h1,
-        body.dark-mode h2,
-        body.dark-mode h3 {
-            color: #f1f1f1 !important;
-        }
-        body.dark-mode p,
-        body.dark-mode li {
-            color: #ccc !important;
-        }
-        body.dark-mode a {
-            color: #90caf9 !important;
-        }
-        body.dark-mode footer {
-            background-color: #0d0d0d !important;
-            color: #aaa !important;
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const toggleBtn = document.getElementById("darkModeToggle");
-            const body = document.body;
-            // استعادة الوضع المحفوظ  
-            if (localStorage.getItem("theme") === "light") {
-                body.classList.add("light-mode");
-            }
-            // تبديل الوضع  
-            toggleBtn.addEventListener("click", () => {
-                body.classList.toggle("dark-mode");
-                if (body.classList.contains("dark-mode")) {
-                    localStorage.setItem("theme", "dark");
-                } else {
-                    localStorage.setItem("theme", "light");
-                }
-            });
-        });
-    </script>
+    </head>
+<body>
 
-    <a id="chatBtn" style="display: flex;align-items: center;justify-content: center;width: 60px;height: 60px;background-color: #0075E3;border-radius: 50%;border: none;cursor: pointer;z-index: 9999;box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#fff" viewBox="0 0 24 24">
-            <path d="M20 2H4C2.897 2 2 2.897 2 4v14c0 1.103.897 2 2 2h14l4 4V4c0-1.103-.897-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />
-        </svg>
-    </a>
+    <div style="position: fixed !important; bottom: 0px !important; width: 100% !important; height: 55px !important; z-index: 9999 !important;">
+<div id="google_translate_element" class="translate-icon"></div>  <script>  
+  // 📌 اجعل الترجمة تبدأ دائمًا بالعربية  
+  if (!document.cookie.includes("googtrans=/ar/ar")) {  
+    document.cookie = "googtrans=/ar/ar;path=/;";  
+  }  
+  
+  function googleTranslateElementInit() {  
+    new google.translate.TranslateElement({  
+      pageLanguage: 'ar',  
+      autoDisplay: true  
+    }, 'google_translate_element');  
+  }  
+</script>  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>  <style>  
+  /* زر الترجمة */  
+  .translate-icon {  
+    position: relative;  
+    width: 40px;  
+    height: 40px;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    cursor: pointer;  
+  
+    /* 📌 التحريك درجة يمين وتحت */  
+    transform: translate(-6px, 1px);  
+  
+    z-index: 9999;  
+  }  
+  
+  /* الأيقونة 🌐 */  
+  .translate-icon::before {  
+    content: "🌐";  
+    font-size: 49px; /* نفس مقاسك */  
+    z-index: 1;  
+    pointer-events: none;  
+  }  
+  
+  /* إخفاء النصوص الجانبية */  
+  .goog-te-gadget {  
+    font-size: 0 !important;  
+    color: transparent !important;  
+  }  
+  .goog-te-gadget span,  
+  .goog-te-gadget-simple,  
+  .goog-te-banner-frame,  
+  .goog-logo-link {  
+    display: none !important;  
+  }  
+  
+  /* القائمة المنسدلة شفافة فوق الأيقونة */  
+  .translate-icon select {  
+    position: absolute;  
+    top: 0;  
+    left: 0;  
+    width: 100%;  
+    height: 100%;  
+    opacity: 0;  
+    cursor: pointer;  
+    z-index: 2;  
+  }  
+</style>  
+<button id="darkModeToggle"   
+style="position:fixed;bottom:20px;left:1px; /* تم تغيير المكان إلى اليسار */  
+background:#333;color:#fff;border:none;  
+border-radius:50%;width:55px;height:55px;  
+font-size:50px;cursor:pointer;z-index:99999;">
+🌗
+</button>
 
+<style>  
+  /* الوضع الداكن */  
+  body.dark-mode {  
+    background-color: #121212 !important;  
+    color: #e0e0e0 !important;  
+  }  
+  
+  body.dark-mode header {  
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a 70%) !important;  
+    color: #f1f1f1 !important;  
+  }  
+  
+  body.dark-mode nav {  
+    background-color: #1f1f1f !important;  
+  }  
+  
+  body.dark-mode .nav-links a {  
+    color: #ddd !important;  
+  }  
+  body.dark-mode .nav-links a:hover,  
+  body.dark-mode .nav-links a.active-link {  
+    color: #90caf9 !important;  
+  }  
+  
+  body.dark-mode section {  
+    background-color: #181818 !important;  
+  }  
+  
+  body.dark-mode .service-card,  
+  body.dark-mode .product-card,  
+  body.dark-mode .bot-card,  
+  body.dark-mode .contact-card,  
+  body.dark-mode .logo-item {  
+    background-color: #1f1f1f !important;  
+    color: #f1f1f1 !important;  
+    border: 1px solid #333 !important;  
+  }  
+  
+  body.dark-mode h1,  
+  body.dark-mode h2,  
+  body.dark-mode h3 {  
+    color: #f1f1f1 !important;  
+  }  
+  
+  body.dark-mode p,  
+  body.dark-mode li {  
+    color: #ccc !important;  
+  }  
+  
+  body.dark-mode a {  
+    color: #90caf9 !important;  
+  }  
+  
+  body.dark-mode footer {  
+    background-color: #0d0d0d !important;  
+    color: #aaa !important;  
+  }  
+</style>  <script>  
+  document.addEventListener("DOMContentLoaded", function() {  
+    const toggleBtn = document.getElementById("darkModeToggle");  
+    const body = document.body;  
+  
+    // استعادة الوضع المحفوظ  
+    if (localStorage.getItem("theme") === "light") {  
+      body.classList.add("light-mode");  
+    }  
+  
+    // تبديل الوضع  
+    toggleBtn.addEventListener("click", () => {  
+      body.classList.toggle("dark-mode");  
+      if (body.classList.contains("dark-mode")) {  
+        localStorage.setItem("theme", "dark");  
+      } else {  
+        localStorage.setItem("theme", "light");  
+      }  
+    });  
+  });  
+</script>           
+    </div>
     <header>
         <div class="container">
             <img src="https://www2.0zz0.com/2025/09/02/15/345260820.png" alt="أحمد عصام" class="profile-img">
@@ -1767,102 +1763,138 @@
             </div>
         </div>
     </section>
-
     <div id="backToTop" title="رجوع للأعلى">  
-        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#007bff" viewBox="0 0 24 24">  
-            <path d="M12 4l-8 8h6v8h4v-8h6z"/>  
-        </svg>  
-    </div>  
-    <style>  
-        #backToTop {  
-            position: fixed;  
-            bottom: 3px;             /* مرفوع 85px */  
-            left: 50%;  
-            transform: translateX(-50%);  
-            z-index: 99999;  
-            cursor: pointer;  
-            display: none;            /* مخفي في البداية */  
-        }  
-        #backToTop svg {  
-            filter: drop-shadow(0 0 10px rgba(0, 123, 255, 0.7));  
-            transition: all 0.4s ease-in-out;  
-            animation: pulse 2s infinite; /* نبض متوهج */  
-        }  
-        #backToTop:hover svg {  
-            fill: #ff6600;  
-            filter: drop-shadow(0 0 20px rgba(255, 102, 0, 0.9));  
-            transform: scale(1.2) translateY(-100px); /* يكبر سنة ويتحرك لفوق */  
-        }  
-        @keyframes pulse {  
-            0%   { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
-            50%  { filter: drop-shadow(0 0 20px rgba(0, 123, 255, 1)); }  
-            100% { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
-        }  
-    </style>  
-    <script>  
-        const backToTopBtn = document.getElementById("backToTop");  
-        // إظهار الأيقونة عند النزول  
-        window.addEventListener("scroll", () => {  
-            if (window.scrollY > 200) {  
-                backToTopBtn.style.display = "block";  
-            } else {  
-                backToTopBtn.style.display = "none";  
-            }  
-        });  
-        // التمرير لأعلى عند الضغط  
-        backToTopBtn.addEventListener("click", () => {  
-            window.scrollTo({ top: 0, behavior: "smooth" });  
-        });  
-    </script>
+  <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#007bff" viewBox="0 0 24 24">  
+    <path d="M12 4l-8 8h6v8h4v-8h6z"/>  
+  </svg>  
+</div>  
+  
+<style>  
+  #backToTop {  
+    position: fixed;  
+    bottom: 3px;             /* مرفوع 85px */  
+    left: 50%;  
+    transform: translateX(-50%);  
+    z-index: 99999;  
+    cursor: pointer;  
+    display: none;            /* مخفي في البداية */  
+  }  
+  
+  #backToTop svg {  
+    filter: drop-shadow(0 0 10px rgba(0, 123, 255, 0.7));  
+    transition: all 0.4s ease-in-out;  
+    animation: pulse 2s infinite; /* نبض متوهج */  
+  }  
+  
+  #backToTop:hover svg {  
+    fill: #ff6600;  
+    filter: drop-shadow(0 0 20px rgba(255, 102, 0, 0.9));  
+    transform: scale(1.2) translateY(-100px); /* يكبر سنة ويتحرك لفوق */  
+  }  
+  
+  @keyframes pulse {  
+    0%   { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
+    50%  { filter: drop-shadow(0 0 20px rgba(0, 123, 255, 1)); }  
+    100% { filter: drop-shadow(0 0 5px rgba(0, 123, 255, 0.5)); }  
+  }  
+</style>  
+  
+<script>  
+  const backToTopBtn = document.getElementById("backToTop");  
+  
+  // إظهار الأيقونة عند النزول  
+  window.addEventListener("scroll", () => {  
+    if (window.scrollY > 200) {  
+      backToTopBtn.style.display = "block";  
+    } else {  
+      backToTopBtn.style.display = "none";  
+    }  
+  });  
+  
+  // التمرير لأعلى عند الضغط  
+  backToTopBtn.addEventListener("click", () => {  
+    window.scrollTo({ top: 0, behavior: "smooth" });  
+  });  
+</script>
 
-    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
-    <div id="chatModal" style="display: none;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);width: 375px;height: 600px;background-color: #fff;border-radius: 10px;box-shadow: 0 8px 20px rgba(0,0,0,0.3);z-index: 9998;overflow: hidden;">
-        <div id="agentContainer" style="width:100%;height:100%;"></div>
-    </div>
-    <script>
-        const btn = document.getElementById('chatBtn');
-        const modal = document.getElementById('chatModal');
-        btn.addEventListener('click', function() {
-            if (modal.style.display === "none") {
-                modal.style.display = "block";
-                // تهيئة الـ Agent داخل الـ div  
-                window.AgentInitializer.initModalView({
-                    rootId: "agentContainer",
-                    formID: "0199160917cb749ba85bb3fba78e15f4cda9",
-                    queryParams: ["skipWelcome=1"],
-                    domain: "https://www.jotform.com",
-                    isInitialOpen: true,
-                    isDraggable: true,
-                    variant: false,
-                    isVoice: false
-                });
-            } else {
-                modal.style.display = "none";
-            }
-        });
-    </script>
-    <script src="https://cdn.jotfor.ms/s/static/latest/static/feedback2.js"></script>
-    <script>
-        var componentID = new JotformFeedback({
-            type: 0,
-            width: 700,
-            height: 500,
-            fontColor: "#FFFFFF",
-            background: "#F59202",
-            isCardForm: false,
-            formId: "252474306808561",
-            buttonText: "Feedback",
-            buttonSide: "right",
-            buttonAlign: "top",
-            base: "https://form.jotform.com/",
-        }).componentID;
-    </script>
-    <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
-    <script>
-        window.jotformEmbedHandler("iframe[id='" + componentID + "_iframe']", "https://form.jotform.com/")
-    </script>
+<script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>  <a id="chatBtn" style="  
+display: flex;  
+align-items: center;  
+justify-content: center;  
+position: fixed;  
+top: 50px;    /* ارتفاع الزر من الأعلى */  
+left: 0;       /* لصق الزر على الحافة اليسرى */  
+width: 60px;  
+height: 60px;  
+background-color: #0075E3;  
+border-radius: 50%;  
+border: none;  
+cursor: pointer;  
+z-index: 9999;  
+box-shadow: 0 4px 6px rgba(0,0,0,0.2);  
+">
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#fff" viewBox="0 0 24 24">
+<path d="M20 2H4C2.897 2 2 2.897 2 4v14c0 1.103.897 2 2 2h14l4 4V4c0-1.103-.897-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+</svg>
+</a>
 
-    <footer>
+<div id="chatModal" style="  
+  display: none;  
+  position: fixed;  
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+  width: 375px;       /* عرض النافذة */  
+  height: 600px;      /* ارتفاع النافذة */  
+  background-color: #fff;  
+  border-radius: 10px;  
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);  
+  z-index: 9998;  
+  overflow: hidden;  
+">  
+  <div id="agentContainer" style="width:100%;height:100%;"></div>  
+</div>  <script>  
+  const btn = document.getElementById('chatBtn');  
+  const modal = document.getElementById('chatModal');  
+  
+  btn.addEventListener('click', function() {  
+    if (modal.style.display === "none") {  
+      modal.style.display = "block";  
+      // تهيئة الـ Agent داخل الـ div  
+      window.AgentInitializer.initModalView({  
+        rootId: "agentContainer",  
+        formID: "0199160917cb749ba85bb3fba78e15f4cda9",  
+        queryParams: ["skipWelcome=1"],  
+        domain: "https://www.jotform.com",  
+        isInitialOpen: true,  
+        isDraggable: true,  
+        variant: false,  
+        isVoice: false  
+      });  
+    } else {  
+      modal.style.display = "none";  
+    }  
+  });  
+</script>  
+  <script src="https://cdn.jotfor.ms/s/static/latest/static/feedback2.js"></script>      <script>    
+    var componentID = new JotformFeedback({    
+          
+  type: 0,    
+  width: 700,    
+  height: 500,    
+  fontColor: "#FFFFFF",    
+  background: "#F59202",    
+  isCardForm: false,    
+  formId: "252474306808561"    
+  ,    
+      buttonText: "Feedback",    
+      buttonSide: "right",    
+      buttonAlign: "top",    
+      base: "https://form.jotform.com/",    
+    }).componentID;    
+  </script>      <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>      <script>window.jotformEmbedHandler("iframe[id='" + componentID + "_iframe']", "https://form.jotform.com/")</script>    
+    
+<footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -1874,7 +1906,7 @@
                     <h3>روابط سريعة</h3>
                     <ul class="footer-links">
                         <li><a href="#about">من نحن</a></li>
-                        <li><a href="#services">خدماتنا</a></li>
+                       <li><a href="#services">خدماتنا</a></li>
                         <li><a href="#products">منتجاتنا</a></li>
                         <li><a href="#bots">بوتاتنا</a></li>
                         <li><a href="#contact">تواصل معنا</a></li>
@@ -1883,16 +1915,25 @@
                 <div class="footer-section">
                     <h3>العنوان</h3>
                     <p><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</p>
+
                 </div>
             </div>
             <div class="copyright">
-                <p>© CIW <span id="currentYear">2025</span>. جميع الحقوق محفوظة لشركتنا.</p>
+                <p>© CIW <span id="currentYear">2025</span>. جميع الحقوق محفوظة لشركتنا.</p>     
             </div>
         </div>
     </footer>
 
+    <div class="fab-container">
+        <div class="fab-actions">
+            </div>
+        <button class="fab-main-btn" id="fab-main-btn" aria-label="Open Actions Menu">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+     document.addEventListener('DOMContentLoaded', function () {
+            
             const currentYearSpan = document.getElementById('currentYear');
             if (currentYearSpan) {
                 currentYearSpan.textContent = new Date().getFullYear();
@@ -1901,70 +1942,57 @@
     </script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // 1. Create the FAB HTML structure and add it to the page
-        const fabContainer = document.createElement('div');
-        fabContainer.className = 'fab-container';
-        fabContainer.innerHTML = `
-            <div class="fab-options">
-                <div id="fab-dark-mode-wrapper" class="fab-option" title="Dark/Light Mode"></div>
-                <div id="fab-translate-wrapper" class="fab-option" title="Translate"></div>
-                <div id="fab-chat-wrapper" class="fab-option" title="Chat"></div>
-                <div id="fab-feedback-wrapper" class="fab-option" title="Feedback"></div>
-            </div>
-            <div class="fab-main-button">
-                <i class="fas fa-plus"></i>
-            </div>
-        `;
-        document.body.appendChild(fabContainer);
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- FAB Logic ---
+        const fabContainer = document.querySelector('.fab-container');
+        const fabMainBtn = document.getElementById('fab-main-btn');
+        const fabActionsContainer = document.querySelector('.fab-actions');
 
-        // 2. Find the original buttons and move them into the new FAB structure
-        // This preserves all their original functionality.
-        const darkModeBtn = document.getElementById('darkModeToggle');
-        const translateBtn = document.getElementById('google_translate_element');
-        const chatBtn = document.getElementById('chatBtn');
-        
-        if (darkModeBtn) {
-            document.getElementById('fab-dark-mode-wrapper').appendChild(darkModeBtn);
-        }
-        if (translateBtn) {
-            document.getElementById('fab-translate-wrapper').appendChild(translateBtn);
-        }
-        if (chatBtn) {
-            document.getElementById('fab-chat-wrapper').appendChild(chatBtn);
+        if (fabMainBtn) {
+            fabMainBtn.addEventListener('click', () => {
+                fabContainer.classList.toggle('active');
+            });
         }
 
-        // The Jotform feedback button is loaded dynamically, so we must wait for it to appear.
-        // A MutationObserver is the most reliable way to do this.
-        const moveJotformButton = () => {
-            const feedbackBtn = document.querySelector('.jotform-feedback-link');
-            // Check if the button exists and hasn't already been moved
-            if (feedbackBtn && !document.getElementById('fab-feedback-wrapper').contains(feedbackBtn)) {
-                document.getElementById('fab-feedback-wrapper').appendChild(feedbackBtn);
-                observer.disconnect(); // Stop observing once we've found and moved the button
+        // --- Function to move and clean elements ---
+        const setupFabActionItem = (element) => {
+            if (element && fabActionsContainer) {
+                // Remove all inline styles related to positioning
+                element.style.position = '';
+                element.style.bottom = '';
+                element.style.left = '';
+                element.style.top = '';
+                element.style.right = '';
+                element.style.transform = '';
+                element.style.zIndex = '';
+                
+                // Move the element into the FAB actions container
+                fabActionsContainer.prepend(element); // prepend to have them appear top-to-bottom
             }
         };
-        
-        const observer = new MutationObserver(moveJotformButton);
-        observer.observe(document.body, { childList: true, subtree: true });
-        moveJotformButton(); // Initial check in case it's already loaded
 
-        // 3. Add the open/close functionality to the main FAB button
-        const mainFab = fabContainer.querySelector('.fab-main-button');
-        const fabIcon = mainFab.querySelector('i');
-        
-        mainFab.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent click from bubbling up to the document
-            fabContainer.classList.toggle('open');
+        // --- Move Static Elements ---
+        setupFabActionItem(document.getElementById('darkModeToggle'));
+        setupFabActionItem(document.getElementById('google_translate_element'));
+        setupFabActionItem(document.getElementById('chatBtn'));
+
+        // --- Handle Dynamically Added Jotform Button ---
+        const observer = new MutationObserver((mutationsList, obs) => {
+            // Jotform button has a specific class and is an <a> tag
+            const jotformBtn = document.querySelector('a.jotform-feedback-link');
+            if (jotformBtn) {
+                setupFabActionItem(jotformBtn);
+                // Once we find and move it, we don't need to observe anymore
+                obs.disconnect();
+            }
         });
 
-        // 4. (Optional but recommended) Close the FAB menu when clicking anywhere else on the page
-        document.addEventListener('click', function(event) {
-            if (!fabContainer.contains(event.target) && fabContainer.classList.contains('open')) {
-                fabContainer.classList.remove('open');
-            }
+        // Start observing the document body for new elements being added
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
         });
     });
     </script>
-</body>
+    </body>
 </html>
